@@ -1,19 +1,22 @@
-import { Link } from 'react-router-dom';
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Register = () => {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const pin = e.target.pin.value;
     const mobile = e.target.mobile.value;
     const email = e.target.email.value;
-    // Handle registration logic here
-    console.log('Registering with', { name, pin, mobile, email });
+    const userData = { name, pin, mobile, email };
+    console.log(userData);
+
+    const res = await axios.post("http://localhost:5000/addNewUser", userData);
+    console.log(res);
   };
 
   const handlePinInput = (e) => {
-    // Allow only numeric input
-    const value = e.target.value.replace(/[^0-9]/g, '');
+    const value = e.target.value.replace(/[^0-9]/g, "");
     e.target.value = value;
   };
 
@@ -23,7 +26,10 @@ const Register = () => {
         <h2 className="text-2xl font-bold mb-5 text-center">Register</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="name"
+              className="block text-gray-700 font-medium mb-2"
+            >
               Name
             </label>
             <input
@@ -35,7 +41,10 @@ const Register = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="pin" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="pin"
+              className="block text-gray-700 font-medium mb-2"
+            >
               5-digit PIN
             </label>
             <input
@@ -49,7 +58,10 @@ const Register = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="mobile" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="mobile"
+              className="block text-gray-700 font-medium mb-2"
+            >
               Mobile Number
             </label>
             <input
@@ -61,7 +73,10 @@ const Register = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium mb-2"
+            >
               Email
             </label>
             <input
@@ -79,7 +94,12 @@ const Register = () => {
             Register
           </button>
         </form>
-        <h1 className="my-2">Alraedy have an account? Please  <span className= " font-semibold text-blue-700 hover:drop-shadow-lg hover:font-bold"><Link to="/login">LOGIN</Link></span></h1>
+        <h1 className="my-2">
+          Alraedy have an account? Please{" "}
+          <span className=" font-semibold text-blue-700 hover:drop-shadow-lg hover:font-bold">
+            <Link to="/login">LOGIN</Link>
+          </span>
+        </h1>
       </div>
     </div>
   );
