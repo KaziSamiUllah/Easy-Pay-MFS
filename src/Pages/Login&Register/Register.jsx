@@ -1,18 +1,23 @@
 import axios from "axios";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Register = () => {
+  const { user, SignUp } = useContext(AuthContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const pin = e.target.pin.value;
     const mobile = e.target.mobile.value;
     const email = e.target.email.value;
-    const userData = { name, pin, mobile, email };
+  
+    const userData = { name, pin, mobile, email, role };
+    
     console.log(userData);
 
-    const res = await axios.post("http://localhost:5000/addNewUser", userData);
-    console.log(res);
+    SignUp(userData)
   };
 
   const handlePinInput = (e) => {
@@ -65,7 +70,7 @@ const Register = () => {
               Mobile Number
             </label>
             <input
-              type="text"
+              type="number"
               id="mobile"
               name="mobile"
               className="w-full px-3 py-2 border bg-white border-gray-300 rounded-md focus:outline-none focus:border-primary"

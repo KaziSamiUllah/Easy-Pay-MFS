@@ -1,20 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
-  const [showPass, setShowPass] = useState(false);
-  const toggleView = () => {
-    setShowPass(!showPass);
-    showPass;
-  };
-
+  const { SignIn, loading, user } = useContext(AuthContext);
+console.log(user, loading);
   const handleSubmit = (e) => {
     e.preventDefault();
     const identifier = e.target.identifier.value;
     const pin = e.target.pin.value;
-    // Handle login logic here
-    console.log("Logging in with", { identifier, pin });
+    const signinData = { identifier, pin };
+    SignIn(signinData);
+    if(user){
+      alert("logged in successfully")
+    }
   };
 
   return (
@@ -46,7 +46,7 @@ const Login = () => {
             </label>
 
             <input
-              type={showPass ? "Number" : "password"}
+              type="password"
               id="pin"
               name="pin"
               className="w-full px-3 bg-white  py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
@@ -63,7 +63,12 @@ const Login = () => {
             Login
           </button>
         </form>
-        <h1 className="my-2">New to EasyPay? Please  <span className= " font-semibold text-blue-700 hover:drop-shadow-lg hover:font-bold"><Link to="/register">REGISTER</Link></span></h1>
+        <h1 className="my-2">
+          New to EasyPay? Please{" "}
+          <span className=" font-semibold text-blue-700 hover:drop-shadow-lg hover:font-bold">
+            <Link to="/register">REGISTER</Link>
+          </span>
+        </h1>
       </div>
     </div>
   );
