@@ -1,20 +1,43 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { SignIn, loading, user } = useContext(AuthContext);
-console.log(user, loading);
-  const handleSubmit = (e) => {
+
+  useEffect(() => {
+    if (user) {
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully logged in.",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+
+        if(user?.role == "user"){
+        navigate("/userHome")}
+
+      else if(user?.role =="agent")
+      {
+        navigate("/agentHome")
+      }
+      else if(user?.role == "admin"){
+        navigate("/adminHome")
+      }
+      });
+    }
+  }, [user]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const identifier = e.target.identifier.value;
     const pin = e.target.pin.value;
     const signinData = { identifier, pin };
-    SignIn(signinData);
-    if(user){
-      alert("logged in successfully")
-    }
+
+    await SignIn(signinData);
   };
 
   return (

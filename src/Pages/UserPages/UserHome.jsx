@@ -11,7 +11,7 @@ const UserHome = () => {
               <h1>Send Money</h1>
             </div>
           </Link>
-          <Link to="/mobileRecharge">
+          <Link to="/recharge">
             <div className="bg-white h-28 lg:h-48 flex justify-center items-center text-gray-800 text-lg font-semibold lg:font-bold lg:text-2xl rounded-2xl shadow-md hover:bg-secondary hover:scale-105 transform transition duration-300">
               <h1>Mobile Recharge</h1>
             </div>
@@ -32,7 +32,7 @@ const UserHome = () => {
             </div>
           </Link>
         
-          <Link to="/transactionHistory">
+          <Link to="/userTransactions">
             <div className="bg-white h-28 lg:h-48 flex justify-center items-center text-gray-800 text-lg font-semibold lg:font-bold lg:text-2xl rounded-2xl shadow-md hover:bg-secondary hover:scale-105 transform transition duration-300">
               <h1>Transaction History</h1>
             </div>

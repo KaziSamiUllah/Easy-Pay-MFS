@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const { user, SignUp } = useContext(AuthContext);
+  const navigate= useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,11 +15,23 @@ const Register = () => {
     const mobile = e.target.mobile.value;
     const email = e.target.email.value;
   
-    const userData = { name, pin, mobile, email, role };
+    const userData = { name, pin, mobile, email};
     
     console.log(userData);
 
-    SignUp(userData)
+   const res = await SignUp(userData)
+   console.log(res);
+   if(res.acknowledged){
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "User has been created",
+      showConfirmButton: false,
+      timer: 1500
+    });
+    navigate("/")
+    
+   }
   };
 
   const handlePinInput = (e) => {

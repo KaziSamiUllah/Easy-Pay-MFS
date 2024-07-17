@@ -23,21 +23,23 @@ const AuthProvider = ({ children }) => {
       "http://localhost:5000/addNewUser",
       signUpData
     );
-    console.log(res.data.acknowledged);
+    if (res.data.acknowledged) setUser(signUpData);
     setLoading(false);
+    return res.data;
   };
 
   const SignIn = async (signinData) => {
     setLoading(true);
-    axios
+    await axios
       .post("http://localhost:5000/findUser", signinData)
       .then((response) => {
         const data = response;
         console.log(data);
         if (data.data) {
-            console.log(data.data);
+          console.log(data.data);
           setUser(data.data);
           setLoading(false);
+          return user;
         }
       });
   };
